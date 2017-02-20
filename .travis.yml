@@ -1,0 +1,18 @@
+language: node_js
+env:
+  - YARN_VERSION=0.20.3
+before_install:
+  - npm install -g yarn@$YARN_VERSION
+script:
+  - yarn run commit
+cache:
+  yarn: true
+  directories:
+    - node_modules
+branches:
+  only:
+    - master
+notifications:
+  email:
+    recipients:
+      - Andrew.King@myob.com
