@@ -1,0 +1,35 @@
+{
+  "name": "slither",
+  "version": "0.0.0",
+  "description": "A no-frills testing framework",
+  "main": "./lib/Slither.js",
+  "scripts": {
+    "clean": "rm -rf coverage lib",
+    "build": "babel src -d lib",
+    "lint": "eslint .",
+    "commit": "yarn run lint",
+    "prepublish": "yarn run clean && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/andykingking/slither-js.git"
+  },
+  "author": "Andrew King",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andykingking/slither-js/issues"
+  },
+  "homepage": "https://github.com/andykingking/slither-js#readme",
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2015-script": "^1.1.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "eslint": "^3.13.1",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0"
+  }
+}
