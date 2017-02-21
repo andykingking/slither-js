@@ -8,7 +8,8 @@
     "build": "babel src -d lib",
     "lint": "eslint .",
     "flow-check": "./node_modules/.bin/flow check",
-    "commit": "yarn run lint && yarn run flow-check",
+    "test": "./node_modules/.bin/babel-node spec/Slither.spec.js",
+    "commit": "yarn run lint && yarn run flow-check && yarn run test",
     "prepublish": "yarn run clean && yarn run build"
   },
   "repository": {
