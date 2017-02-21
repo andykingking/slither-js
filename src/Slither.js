@@ -1,6 +1,20 @@
+// @flow
+
 import process from 'process';
 
-function TestFailError(reason) {
+type Callback = {
+  name: string;
+  fn: Function;
+  skip?: boolean;
+};
+
+type TestResult = {
+  name: string;
+  pass: boolean;
+  reason?: string;
+};
+
+function TestFailError(reason: string) {
   this.name = 'TestFailError';
   this.message = reason;
   this.stack = (new Error()).stack;
@@ -8,7 +22,7 @@ function TestFailError(reason) {
 TestFailError.prototype = Object.create(Error.prototype);
 TestFailError.prototype.constructor = TestFailError;
 
-export const emoji = {
+const emoji = {
   plane: '✈️',
   snek: '🐍',
   bunny: '🐇',
@@ -18,15 +32,15 @@ export const emoji = {
   nope: '👎🏽',
 };
 
-export const logTask = (emojiString, message) => {
+const logTask = (emojiString: string, message: string) => {
   console.log(`  ${emojiString}  ${message}`);
 };
 
-export const logSubTask = (message) => {
+export const logSubTask = (message: string) => {
   console.log(`       ${message}`);
 };
 
-export const start = (testName) => {
+const start = (testName: string) => {
   logTask(emoji.plane, `Running test: ${testName}`);
 };
 
@@ -34,13 +48,13 @@ export const pass = () => {
   logSubTask('Test passed.');
 };
 
-export const fail = (reason) => {
+export const fail = (reason: string) => {
   throw new TestFailError(reason);
 };
 
-const runSetup = (setup) => {
+const runSetup = (setup: Callback[]) => {
   if (setup.length > 0) logTask(emoji.bunny, 'Setting up...');
-  setup.forEach(({ name, fn, skip }) => {
+  setup.forEach(({ name, fn, skip }: Callback) => {
     if (skip) logSubTask(`[SKIPPED] ${name}`);
     else {
       logSubTask(name);
@@ -49,7 +63,7 @@ const runSetup = (setup) => {
   });
 };
 
-const runTest = ({ name, fn, skip }) => {
+const runTest = ({ name, fn, skip }: Callback): TestResult => {
   if (skip) start(`[SKIPPED] ${name}`);
   else start(name);
   try {
@@ -61,9 +75,9 @@ const runTest = ({ name, fn, skip }) => {
   }
 };
 
-const runTeardown = (teardown) => {
+const runTeardown = (teardown: Callback[]) => {
   if (teardown.length > 0) logTask(emoji.clean, 'Cleaning up...');
-  teardown.forEach(({ name, fn, skip }) => {
+  teardown.forEach(({ name, fn, skip }: Callback) => {
     if (skip) logSubTask(`[SKIPPED] ${name}`);
     else {
       logSubTask(name);
@@ -72,7 +86,7 @@ const runTeardown = (teardown) => {
   });
 };
 
-const hasFailure = testResult => !(testResult.pass);
+const hasFailure = (testResult: TestResult): boolean => !(testResult.pass);
 
 const testsPassed = () => {
   logTask(emoji.ok, 'Tests completed.\n');
@@ -88,22 +102,22 @@ const tests = [];
 const teardown = [];
 
 export default {
-  setup(name, fn) {
+  setup(name: string, fn: Function) {
     setup.push({ name, fn });
   },
-  xsetup(name, fn) {
+  xsetup(name: string, fn: Function) {
     setup.push({ name, fn, skip: true });
   },
-  test(name, fn) {
+  test(name: string, fn: Function) {
     tests.push({ name, fn });
   },
-  xtest(name, fn) {
+  xtest(name: string, fn: Function) {
     tests.push({ name, fn, skip: true });
   },
-  teardown(name, fn) {
+  teardown(name: string, fn: Function) {
     teardown.push({ name, fn });
   },
-  xteardown(name, fn) {
+  xteardown(name: string, fn: Function) {
     teardown.push({ name, fn, skip: true });
   },
   run() {
