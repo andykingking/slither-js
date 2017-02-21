@@ -1,0 +1,12 @@
+instrumentation:
+  root: .
+  extensions:
+    - .js
+  default-excludes: true
+reporting:
+  print: both
+  watermarks:
+    statements: 100
+    lines: 100
+    functions: 100
+    branches: 100
