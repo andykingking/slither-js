@@ -3,7 +3,7 @@
 set -e
 
 # Create patch release
-npm version minor -m "[skip ci] Upgrade to %s"
+npm version minor -m "[skip ci] Bump version to %s"
 
 # Push new version to origin
 git push
