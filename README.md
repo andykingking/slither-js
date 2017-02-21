@@ -1,9 +1,29 @@
 # slither-js [![Build Status](https://travis-ci.org/andykingking/slither-js.svg?branch=master)](https://travis-ci.org/andykingking/slither-js)
 
+🐍🐍🐍  Don't fear the sneks. 🐍🐍🐍
+
 ## Motivation
 
 Born from a project where full-featured testing frameworks placed unwanted restrictions on a test.
-An experiment in using emoji everywhere.
+
+## Principles
+
+- Test small scripts with small testing frameworks, test large projects with large testing frameworks.
+- Failing a setup or teardown function should fail the whole program, but not the test.
+- Scoping is the responsiblity of the engineer.
+- Ordering is the responsiblity of the engineer.
+- Failing fast means better tests. Proactive testing is better.
+- More emoji is better than less emoji.
+
+## Installation
+
+```bash
+# NPM
+npm install --save-dev slither-js
+
+# YARN
+yarn add slither-js --dev
+```
 
 ## Usage
 
@@ -24,3 +44,10 @@ Slither.teardown('Clean stuff up', () => {
 
 Slither.run();
 ```
+
+```bash
+$ ./node_modules/.bin/babel-node specFile.js
+...
+```
+
+See the [project tests](https://github.com/andykingking/slither-js/blob/master/spec/Slither.spec.js) for examples.
