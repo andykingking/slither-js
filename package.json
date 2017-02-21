@@ -1,6 +1,6 @@
 {
   "name": "slither",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A no-frills testing framework",
   "main": "./lib/Slither.js",
   "scripts": {
