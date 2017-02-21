@@ -3,8 +3,12 @@
 import process from 'process';
 
 import TestFailError from './TestFailError';
+import TestPass from './TestPass';
 import emoji from './emoji';
 import { logTask, logSubTask } from './logging';
+
+const NoPassOrFailCalled = 'No "pass()" or "fail()" called.';
+const TestSkipped = 'Test skipped';
 
 type Callback = {
   name: string;
@@ -23,7 +27,7 @@ const start = (testName: string) => {
 };
 
 export const pass = () => {
-  logSubTask('Test passed.');
+  throw new TestPass();
 };
 
 export const fail = (reason: string) => {
@@ -36,7 +40,11 @@ const runSetup = (setup: Callback[]) => {
     if (skip) logSubTask(`[SKIPPED] ${name}`);
     else {
       logSubTask(name);
-      fn();
+      try {
+        fn();
+      } catch (error) {
+        logSubTask(`ERROR: ${emoji.snek}  ${error.message}`);
+      }
     }
   });
 };
@@ -45,9 +53,17 @@ const runTest = ({ name, fn, skip }: Callback): TestResult => {
   if (skip) start(`[SKIPPED] ${name}`);
   else start(name);
   try {
-    if (!skip) fn();
-    return { name, pass: true };
+    if (!skip) {
+      fn();
+      logSubTask(`ERROR: ${emoji.snek}  ${NoPassOrFailCalled}`);
+      return { name, pass: false, reason: NoPassOrFailCalled };
+    }
+    return { name, pass: true, reason: TestSkipped };
   } catch (error) {
+    if (error instanceof TestPass) {
+      logSubTask('Test passed.');
+      return { name, pass: true };
+    }
     logSubTask(`ERROR: ${emoji.snek}  ${error.message}`);
     return { name, pass: false, reason: error.message };
   }
@@ -59,7 +75,11 @@ const runTeardown = (teardown: Callback[]) => {
     if (skip) logSubTask(`[SKIPPED] ${name}`);
     else {
       logSubTask(name);
-      fn();
+      try {
+        fn();
+      } catch (error) {
+        logSubTask(`ERROR: ${emoji.snek}  ${error.message}`);
+      }
     }
   });
 };
