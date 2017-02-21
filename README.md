@@ -10,8 +10,8 @@ Born from a project where full-featured testing frameworks placed unwanted restr
 
 - Test small scripts with small testing frameworks, test large projects with large testing frameworks.
 - Failing a setup or teardown function should fail the whole program, but not the test.
-- Scoping is the responsiblity of the engineer.
-- Ordering is the responsiblity of the engineer.
+- Scoping is the responsibility of the engineer.
+- Ordering is the responsibility of the engineer.
 - Failing fast means better tests. Proactive testing is better.
 - More emoji is better than less emoji.
 
