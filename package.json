@@ -1,5 +1,5 @@
 {
-  "name": "slither",
+  "name": "slither-js",
   "version": "0.1.0",
   "description": "A no-frills testing framework",
   "main": "./lib/Slither.js",
