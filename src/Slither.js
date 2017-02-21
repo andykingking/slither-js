@@ -2,6 +2,10 @@
 
 import process from 'process';
 
+import TestFailError from './TestFailError';
+import emoji from './emoji';
+import { logTask, logSubTask } from './logging';
+
 type Callback = {
   name: string;
   fn: Function;
@@ -12,32 +16,6 @@ type TestResult = {
   name: string;
   pass: boolean;
   reason?: string;
-};
-
-function TestFailError(reason: string) {
-  this.name = 'TestFailError';
-  this.message = reason;
-  this.stack = (new Error()).stack;
-}
-TestFailError.prototype = Object.create(Error.prototype);
-TestFailError.prototype.constructor = TestFailError;
-
-const emoji = {
-  plane: '✈️',
-  snek: '🐍',
-  bunny: '🐇',
-  clean: '🌪',
-  run: '🏃🏻',
-  ok: '👌🏽',
-  nope: '👎🏽',
-};
-
-const logTask = (emojiString: string, message: string) => {
-  console.log(`  ${emojiString}  ${message}`);
-};
-
-export const logSubTask = (message: string) => {
-  console.log(`       ${message}`);
 };
 
 const start = (testName: string) => {
